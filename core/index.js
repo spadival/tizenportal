@@ -17,6 +17,7 @@ import 'core-js/stable';
 
 // Fetch API polyfill
 import 'whatwg-fetch';
+import './audio-probe.js';
 
 // DOMRect polyfill (from Financial-Times via TizenTube)
 import '../polyfills/domrect-polyfill.js';
