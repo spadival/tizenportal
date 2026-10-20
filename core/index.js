@@ -17,7 +17,6 @@ import 'core-js/stable';
 
 // Fetch API polyfill
 import 'whatwg-fetch';
-import './audio-probe.js';
 
 // DOMRect polyfill (from Financial-Times via TizenTube)
 import '../polyfills/domrect-polyfill.js';
@@ -2058,6 +2057,7 @@ function injectOverlayStyles() {
     '  z-index: 2147483640;',
     '  pointer-events: auto;',
     '}',
+    '.tp-site-hints { display: none !important; }',
     '.tp-site-hint {',
     '  display: flex;',
     '  align-items: center;',
@@ -2167,7 +2167,7 @@ function createSiteHints() {
     '<div class="tp-site-hint"><div class="tp-site-hint-key blue"></div><div class="tp-site-hint-text"><span>Console</span><span class="tp-site-hint-sub">Hold: Safe Mode</span></div></div>',
   ].join('');
   var portalConfig = configGet('tp_portal') || {};
-  var hintPosition = portalConfig.hintsPosition ? resolveHintsPosition(portalConfig) : 'off'; // [shai] default off on sites
+  var hintPosition = 'off'; // [shai] always hide colour bar on sites
   applyHintsPosition(hints, hintPosition);
   if (hintPosition === 'off') {
     hints.style.display = 'none';
