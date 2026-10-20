@@ -1,6 +1,6 @@
 {
   "name": "@axelnanol/tizenportal",
-  "appName": "TizenPortal",
+  "appName": "TizenPortal (Shai)",
   "version": "1120",
   "description": "Universal Tizen Browser Shell",
   "type": "module",

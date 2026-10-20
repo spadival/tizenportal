@@ -169,7 +169,7 @@ function tpHud(msg) {
     // Respect HUD preference (off by default)
     if (window.TizenPortal && window.TizenPortal.config) {
       var portalCfg = TizenPortal.config.get('tp_portal') || {};
-      if (portalCfg.hudPosition === 'off') {
+      if (!portalCfg.hudPosition || portalCfg.hudPosition === 'off') {
         h.style.display = 'none';
         return;
       }
@@ -316,6 +316,8 @@ function resolveViewportMode(card, bundle) {
 }
 
 function resolveUserAgentMode(card) {
+  // [shai] JioHotstar: present as the Samsung TV browser
+  try { if (/(^|\.)(hotstar|jiohotstar)\.com$/i.test(window.location.hostname)) return 'samsung'; } catch (e) {}
   if (card && card.userAgent) {
     return card.userAgent;
   }
@@ -384,6 +386,10 @@ function getUserAgentString(mode) {
   // Allow explicit UA strings
   if (mode.indexOf('Mozilla/') === 0) {
     return mode;
+  }
+
+  if (mode === 'samsung') {
+    return 'Mozilla/5.0 (SMART-TV; Linux; Tizen 6.0) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/4.0 Chrome/120.0.6099.5 TV Safari/537.36';
   }
 
   if (mode === 'desktop') {
@@ -2160,7 +2166,7 @@ function createSiteHints() {
     '<div class="tp-site-hint"><div class="tp-site-hint-key blue"></div><div class="tp-site-hint-text"><span>Console</span><span class="tp-site-hint-sub">Hold: Safe Mode</span></div></div>',
   ].join('');
   var portalConfig = configGet('tp_portal') || {};
-  var hintPosition = resolveHintsPosition(portalConfig);
+  var hintPosition = portalConfig.hintsPosition ? resolveHintsPosition(portalConfig) : 'off'; // [shai] default off on sites
   applyHintsPosition(hints, hintPosition);
   if (hintPosition === 'off') {
     hints.style.display = 'none';
